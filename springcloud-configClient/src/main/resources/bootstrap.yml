@@ -2,6 +2,8 @@ spring:
   cloud:
     config:
       name: sellercenter             #GitHub上配置的文件为：sellercenter-test.properties,其中sellercenter表示配置文件的“-”前的名字
-      uri:  http://localhost:8764/   #Config 的Server端URL地址
       profile: test                  #开启的是哪个配置文件，比如有sellercenter-dev.properties,sellercenter-test.properties,这个配置表示使用sellercenter-test.properties文件
       
+      discovery:
+        enabled: true               #开启配置中心发现功能
+        serviceId: config-servers   #使用到了配置中心集群，此处只是连接的一个可用的配置中心的spring.application.name的值
