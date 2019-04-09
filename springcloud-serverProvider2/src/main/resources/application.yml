@@ -1,0 +1,11 @@
+server:
+  port: 8767
+  
+spring:
+  application:
+    name: server-provider     #这个配置很重要
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:8761/eureka/   #注册到服务注册中心

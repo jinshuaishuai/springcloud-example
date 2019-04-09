@@ -1,0 +1,21 @@
+server:
+  port: 8764
+  
+spring:
+  application:
+    name: config-servers
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/jinshuaishuai/springcloud-config.git  #GitHub远程配置文件的地址
+          username: jinshuaishuai     #GitHub用户名，可配可不配，因为这个仓库是开源的，可以不通过用户名和密码，直接拉取代码
+          password: 518629cp3         #GitHub密码
+          search-paths:  com/**       #扫描github仓库该包及其子包所有目录，登录到GitHub上，会发现该仓库的包结构
+    
+eureka:
+  client:
+    service-url:
+      default-zone:  http://localhost:8761/eureka/      #将Config服务注册到本地的Eureka服务发现里去
+
+      
