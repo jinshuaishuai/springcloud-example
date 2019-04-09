@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 @EnableDiscoveryClient
+
 public class ServerProviderApplication2 {
 	public static void main(String[] args) {
 		SpringApplication.run(ServerProviderApplication2.class, args);
