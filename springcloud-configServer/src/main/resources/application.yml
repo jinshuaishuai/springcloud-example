@@ -1,7 +1,7 @@
 #配置中心服务1
 ---
 server:
-  port: 8764
+  port: 8771
   
 spring:
   application:
@@ -24,7 +24,7 @@ eureka:
 #配置中心服务2
 ---     
 server:
-  port: 8765
+  port: 8772
   
 spring:
   application:
