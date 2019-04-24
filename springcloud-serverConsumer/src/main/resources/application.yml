@@ -12,5 +12,5 @@ eureka:
       
 feign:
   hystrix:
-    enabled: true 
+    enabled: true #开启feign熔断机制
     
