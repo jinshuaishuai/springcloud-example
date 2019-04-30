@@ -1,0 +1,23 @@
+server:
+  port: 8791
+
+spring:
+  application:
+    name: springcloud-zuul
+    
+zuul:
+  routes:
+    hello:                          #这个属性可以任意命名
+      path: /hello/**               #模糊匹配路径
+      service-id: server-provider   #请求转发到一个具体的服务提供者(集群模式)
+      
+    good:
+      path: /good/**
+      service-id: server-provider
+      
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:8761/eureka/
