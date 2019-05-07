@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jin.mapper.BookMapper">
+	<insert id="saveBook" parameterType="com.jin.entity.DO.BookDO">
+		insert into book(book_name,book_price,address,phone)
+		values(#{bookName,jdbcType=VARCHAR},#{bookPrice,jdbcType=INTEGER},#{address,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR})
+	</insert>
+
+</mapper>

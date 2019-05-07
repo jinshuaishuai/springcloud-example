@@ -1,0 +1,16 @@
+server:
+  port: 8784
+  
+spring:
+  application:
+    name: transaction_demo1_provider     #这个配置很重要
+  datasource:
+    driver-class-name:  com.mysql.jdbc.Driver
+    url:  jdbc:mysql://localhost:3309/day18
+    username:  root
+    password:  root
+ 
+      
+mybatis:
+  mapper-locations:  classpath:mapper/*.xml
+      
