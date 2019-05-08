@@ -19,7 +19,18 @@ management:
     web:
       exposure:
         include: '*'  #监控所有的功能。
-        
+  endpoint:
+    health:
+      show-details: always
+#  health:
+#    redis:
+#      enabled: false      #关闭redis服务健康检查
+#    mongo:
+#      enabled: false      #关闭MongoDB服务健康检查
+#    solr:
+#      enabled: false      #关闭solr服务健康检查
+#    elasticsearch:
+#      enabled: false      #关闭全局搜索服务健康检查
 eureka:
   client:
     serviceUrl:

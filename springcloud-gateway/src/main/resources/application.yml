@@ -63,11 +63,11 @@ spring:
        
        #还是会转发到http://ityouknow.com这个地址，因为，这些请求都是一个Get方式的请求，比较Method和Path的断言器，Method
        #优先与Path先执行，所以都会路由到http://ityouknow.com这个地址。所以，一般Method不轻易配
-  redis:        #配置Redis，本机
-    host: 127.0.0.1
-    port: 6379
-    password: 
-#    database: 0
+#  redis:        #配置Redis，本机
+#    host: 127.0.0.1
+#    port: 6379
+#    password: 
+##    database: 0
 #      - id: host-gateway1                       #自定义的路由id，要保持唯一
 #        uri: https://www.sina.com.cn/           #目标服务地址
 #        predicates:                             #路由匹配条件（也称路由规则，其底层实现是Java8的断言）
