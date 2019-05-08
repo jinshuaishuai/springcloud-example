@@ -12,14 +12,14 @@ spring:
   boot:
     admin:
       client:
-        url:
-        - http://localhost:8783
+        url:  http://localhost:8783
+        
 management:
   endpoints:
     web:
       exposure:
         include: '*'  #监控所有的功能。
-     
+        
 eureka:
   client:
     serviceUrl:
