@@ -16,22 +16,24 @@ spring:
     
 #配置consul，将该服务注册到consul上
 
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        service-name: service-producer      #注册到consul上的服务提供者名称
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone:  http://localhost:8761/eureka/   #注册到服务注册中心
+#  cloud:
+#    consul:
+#      host: localhost
+#      port: 8500
+#      discovery:
+#        service-name: service-producer      #注册到consul上的服务提供者名称
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:8761/eureka/   #注册到服务注册中心
 management:
   endpoints:
     web:
       exposure:
         include: '*'  #监控所有的功能。      
-      
+  endpoint:
+    health:
+      show-details: always  
 mybatis:
   mapper-locations:  classpath:mapper/*.xml
       
