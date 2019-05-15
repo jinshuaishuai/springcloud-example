@@ -7,3 +7,4 @@ spring:
       discovery:
         enabled: true               #开启配置中心发现功能
         serviceId: config-servers   #使用到了配置中心集群，此处只是连接的一个可用的配置中心的spring.application.name的值
+      fail-fast: true
