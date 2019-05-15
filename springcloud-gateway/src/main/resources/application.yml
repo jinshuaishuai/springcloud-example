@@ -19,6 +19,7 @@ spring:
       - id: springcloud-gateway
         uri:  lb://server-provider                #做负载均衡,lb是Scheme，相当于Http，一个协议
         filters:
+        - RewritePath=/server/(?<segment>.*), /$\{segment}      #路由重写
         - name: Hystrix                           #熔断过滤器
           args:
             name:  fallback                       #符合Java命名规范即可
@@ -39,7 +40,9 @@ spring:
             
         predicates:
         - Method=GET
-        - RemoteAddr=172.17.1.189,172.17.1.65         #设置指定的IP可以进行路由
+        - RemoteAddr=172.17.1.189,172.17.1.65
+        - Path=/server/**
+                 #设置指定的IP可以进行路由
                          #这项配置的意思是，当断言匹配到这一项时，它会根据filters中的StripPrefix
                                                  #配置1，表示去掉sellercenter，然后拼接一个新的url路径，比如：当浏览器请求
                                                  #url为：http://172.17.1.189:8792/sellercenter/provider1/hello?name=aa
