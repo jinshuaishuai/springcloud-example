@@ -39,7 +39,6 @@ spring:
            exceptions: java.io.IOException,java.util.concurrent.TimeoutException
             
         predicates:
-        - Method=GET
         - RemoteAddr=172.17.1.189,172.17.1.65
         - Path=/server/**
                  #设置指定的IP可以进行路由
