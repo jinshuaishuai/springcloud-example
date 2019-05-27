@@ -10,6 +10,11 @@ spring:
     name: springcloud-gateway
  
   cloud:
+#    consul:
+#      host: 47.99.177.169
+#      port: 8900
+#      discovery:
+#        service-name: springcloud-gateway      #注册到consul上的服务提供者名称
     gateway:
       discovery:
         locator:
@@ -39,7 +44,7 @@ spring:
            exceptions: java.io.IOException,java.util.concurrent.TimeoutException
             
         predicates:
-        - RemoteAddr=172.17.1.189,172.17.1.65
+#        - RemoteAddr=172.17.1.25
         - Path=/server/**
                  #设置指定的IP可以进行路由
                          #这项配置的意思是，当断言匹配到这一项时，它会根据filters中的StripPrefix
@@ -81,6 +86,7 @@ spring:
 #        - Path=/path2/{segment}                 #路径匹配条件
 #        - Method=GET                            #限制接受何种方式的请求
 #        - RemoteAddr=172.17.1.189               #可以访问的客户端浏览器IP地址
+
 
 
 eureka:

@@ -1,6 +1,7 @@
 package com.jin.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,5 +22,10 @@ public class HelloController {
 	@GetMapping("/getProperty")
 	public String getProperty(@RequestParam String foo) {
 		return foo + "             2222222222222";
+	}
+	
+	@PostMapping("/context")
+	public String context() {
+		return "可以 22222222222";
 	}
 }
