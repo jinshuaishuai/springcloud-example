@@ -10,11 +10,11 @@ spring:
     name: springcloud-gateway
  
   cloud:
-#    consul:
-#      host: 47.99.177.169
-#      port: 8900
-#      discovery:
-#        service-name: springcloud-gateway      #注册到consul上的服务提供者名称
+    consul:
+      host: 47.99.94.253
+      port: 8900
+      discovery:
+        service-name: springcloud-gateway      #注册到consul上的服务提供者名称
     gateway:
       discovery:
         locator:
@@ -89,10 +89,10 @@ spring:
 
 
 
-eureka:
-  client:
-    service-url:
-      default-zone:  http://localhost:8761/eureka/
+#eureka:
+#  client:
+ #   service-url:
+ #     default-zone:  http://localhost:8761/eureka/
      
       
 logging:

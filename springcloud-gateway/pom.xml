@@ -34,15 +34,15 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- 引入Netflix的Eureka客户端 -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-		<!-- 引入consul依赖 -->
 		<!-- <dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency> -->
+		<!-- 引入consul依赖 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
+		</dependency>
 		<!-- 引入SpringCloud的gateway -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
