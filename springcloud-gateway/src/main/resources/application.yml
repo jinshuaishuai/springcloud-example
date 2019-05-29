@@ -11,7 +11,7 @@ spring:
  
   cloud:
     consul:
-      host: 47.99.94.253
+      host: localhost
       port: 8900
       discovery:
         service-name: springcloud-gateway      #注册到consul上的服务提供者名称
