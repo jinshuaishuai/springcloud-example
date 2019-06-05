@@ -1,0 +1,104 @@
+server:
+  port: 8792
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'  
+spring:
+  application:
+    name: springcloud-gateway
+ 
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      enabled: true
+      discovery:
+        heartbeat:
+          enabled: true
+        tags: springcloud-gateway
+        service-name: springcloud-gateway          #注册到consul上的服务提供者名称
+        instance-id: springcloud-gateway
+        health-check-interval: 15s
+        enabled: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true                         #根据注册中心的每个服务的serviceId，进行路由转发功能，
+                                                #可以做到负载均衡，限流，熔断
+      routes:
+      - id: springcloud-gateway
+        uri:  lb://server-provider                #做负载均衡,lb是Scheme，相当于Http，一个协议
+        filters:
+        - RewritePath=/server/(?<segment>.*), /$\{segment}      #路由重写
+        - name: Hystrix                           #熔断过滤器
+          args:
+            name:  fallback                       #符合Java命名规范即可
+            fallbackUri:  forward:/fallback/sellercenter          #服务器访问失败，会出现熔断，这是一个重定向Scheme
+        
+   #     - name: RequestRateLimiter                      #请求限流配置
+   #       args:
+   #        redis-rate-limiter.replenishRate: 10         #令牌桶每秒填充平均速率
+   #        redis-rate-limiter.burstCapacity: 20         #令牌桶总容量
+   #        key-resolver: "#{@hostKeyResolver}"          #采用SPEL表达式，获取Spring容器中的hostKeyResolver对象
+           
+        - name: Retry
+          args:
+           retries: 3
+           series: SERVER_ERROR,CLIENT_ERROR
+           methods: GET,POST
+           exceptions: java.io.IOException,java.util.concurrent.TimeoutException
+            
+        predicates:
+#        - RemoteAddr=172.17.1.25
+        - Path=/server/**
+                 #设置指定的IP可以进行路由
+                         #这项配置的意思是，当断言匹配到这一项时，它会根据filters中的StripPrefix
+                                                 #配置1，表示去掉sellercenter，然后拼接一个新的url路径，比如：当浏览器请求
+                                                 #url为：http://172.17.1.189:8792/sellercenter/provider1/hello?name=aa
+                                                 #表示同时匹配了两个断言条件，满足路由转发条件，接下来，会根据filters中的StripPrefix
+                                                 #为1，去掉前面的sellercenter，为
+                                                 #http://172.17.1.189:server-provider/provider1/hello?name=aa,刚好被服务提供者
+                                                 #拿到，进行处理响应，
+          
+  
+#      - id: method-gateway
+#        uri:  http://ityouknow.com
+#        predicates:
+#        - Method=GET                           #所有的以GET方式发起的http请求都会路由到 http://ityouknow.com这个网站
+#        
+       #注意：如果一个路由配置文件中，配置了多个predicates，如果uri都相同，则会按
+       #datetime，cookie，header，host，method，path，queryParam，RemoteAddr的顺序，依次进行请求转发
+       
+       #如果请求具体的匹配到某个predicates上，则按照该路由进行转发。比如，你同时配置了Method和Path断言，您在浏览器输入
+       #http://localhost:8792/path1,该路径刚好匹配到spring-cloud，那么，该请求还是会转发到http://ityouknow.com
+       #地址上，即便是输入这样的一个地址：http://localhost:8792/nnniubi/hasd/afadaf/asdfa
+       
+       #还是会转发到http://ityouknow.com这个地址，因为，这些请求都是一个Get方式的请求，比较Method和Path的断言器，Method
+       #优先与Path先执行，所以都会路由到http://ityouknow.com这个地址。所以，一般Method不轻易配
+#  redis:        #配置Redis，本机
+#    host: 127.0.0.1
+#    port: 6379
+#    password: 
+##    database: 0
+#      - id: host-gateway1                       #自定义的路由id，要保持唯一
+#        uri: https://www.sina.com.cn/           #目标服务地址
+#        predicates:                             #路由匹配条件（也称路由规则，其底层实现是Java8的断言）
+#        - Path=/path1/{segment}                 #请求路径匹配
+#        
+#      - id: host-gateway2
+#        uri: https://www.163.com/
+#        predicates:                             #predicates下可以同时配置多个断言，只有当所有的断言都符合时，才会匹配到该uri
+#        - Path=/path2/{segment}                 #路径匹配条件
+#        - Method=GET                            #限制接受何种方式的请求
+#        - RemoteAddr=172.17.1.189               #可以访问的客户端浏览器IP地址
+
+
+
+#eureka:
+#  client:
+ #   service-url:
+ #     default-zone:  http://localhost:8761/eureka/
+     
