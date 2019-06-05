@@ -1,0 +1,46 @@
+server:
+  port: 8781
+  
+spring:
+  application:
+    name: server-provider     #这个配置很重要
+  boot:
+    admin:
+      client:
+        url:  http://localhost:8783
+  datasource:
+    driver-class-name:  com.mysql.jdbc.Driver
+    url:  jdbc:mysql://localhost:3306/demo1
+    username:  root
+    password:  root
+    
+#配置consul，将该服务注册到consul上
+
+  cloud:
+   consul:
+      host: localhost
+      port: 8500
+      enabled: true
+      discovery:
+        heartbeat:
+          enabled: true
+        tags: server-provider1
+        service-name: server-provider          #注册到consul上的服务提供者名称
+        instance-id: server-provider1
+        health-check-interval: 15s
+        enabled: true
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone:  http://localhost:8761/eureka/   #注册到服务注册中心
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'  #监控所有的功能。      
+  endpoint:
+    health:
+      show-details: always  
+mybatis:
+  mapper-locations:  classpath:mapper/*.xml
+      
