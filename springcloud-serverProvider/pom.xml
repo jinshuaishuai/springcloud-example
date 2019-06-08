@@ -28,6 +28,16 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
 		</dependency>
+		<!-- 引入Eureka客户端 -->
+		<!-- <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency> -->
+		<!-- 引入SpringBoot Security起步依赖 -->
+		<!-- <dependency>
+		    <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency> -->
 		<dependency>
 	        <groupId>de.codecentric</groupId>
 	        <artifactId>spring-boot-admin-starter-client</artifactId>
