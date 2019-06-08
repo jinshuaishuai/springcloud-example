@@ -24,10 +24,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<!-- 引入消息总线依赖 -->
-		<dependency>
+		<!-- <dependency>
 		    <groupId>org.springframework.cloud</groupId>
 		    <artifactId>spring-cloud-starter-bus-amqp</artifactId>
-		</dependency>
+		</dependency> -->
 		<!-- 引入boot监控起步依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
