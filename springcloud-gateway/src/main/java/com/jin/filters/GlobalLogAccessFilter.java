@@ -33,6 +33,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Component
 public class GlobalLogAccessFilter implements GlobalFilter,Ordered{
+	
 	@Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
