@@ -13,4 +13,10 @@ public class BookAO {
 	
 	private String phone;
 	
+	private String author;
+	
+	private String remark;
+	
+	private String press;
+	
 }
