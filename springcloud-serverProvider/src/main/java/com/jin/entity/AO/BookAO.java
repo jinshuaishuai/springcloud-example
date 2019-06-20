@@ -19,4 +19,8 @@ public class BookAO {
 	
 	private String press;
 	
+	private String createTime;
+	
+	private String updateTime;
+	
 }

@@ -11,5 +11,4 @@ public class BuyerAssociationInfoAO {
 	
 	private BuyerCorporateIdentityInfoAO buyerCorporateIdentityInfoAO;
 
-	private BookAO bookAO;
 }

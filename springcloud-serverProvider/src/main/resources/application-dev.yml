@@ -10,7 +10,7 @@ spring:
         url:  http://localhost:8783
   datasource:
     driver-class-name:  com.mysql.jdbc.Driver
-    url:  jdbc:mysql://localhost:3306/demo1
+    url:  jdbc:mysql://localhost:3306/demo2
     username:  root
     password:  root
     

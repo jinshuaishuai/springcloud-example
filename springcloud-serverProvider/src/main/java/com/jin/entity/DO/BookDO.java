@@ -16,4 +16,8 @@ public class BookDO implements Serializable {
 	
 	private String phone;
 	
+	private String createTime;
+	
+	private String updateTime;
+	
 }
