@@ -58,4 +58,12 @@
 	<select id="getBookList" resultMap="BaseBookMap">
 		select * from book;
 	</select>
+	<select id="getBookById" resultMap="BaseBookMap">
+		select id,book_name,book_price,address,phone,create_time,update_time from book
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+		</where>
+	</select>
 </mapper>

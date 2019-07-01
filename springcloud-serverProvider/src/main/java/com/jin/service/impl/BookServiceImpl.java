@@ -35,4 +35,17 @@ public class BookServiceImpl implements BookService {
 		return bookMapper.getBookList();
 	}
 
+	@Override
+	public BookVO getBookById(Integer id) {
+		log.info("getBookById接口入参为：------------->{}",id);
+		BookDO bookById = bookMapper.getBookById(id);
+		log.info("查询的结果为：-------------->{}", bookById);
+		if(null == bookById) {
+			return null;
+		}
+		BookVO bookVo = new BookVO();
+		BeanUtils.copyProperties(bookById, bookVo);
+		return bookVo;
+	}
+
 }

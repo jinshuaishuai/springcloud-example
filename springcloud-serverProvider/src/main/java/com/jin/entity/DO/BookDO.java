@@ -6,8 +6,12 @@ import lombok.Data;
 @Data
 public class BookDO implements Serializable {
 	
-	private static final long serialVersionUID = -478330033118894071L;
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Integer id;
 	
 	private String bookName;
