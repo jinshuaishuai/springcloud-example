@@ -1,11 +1,14 @@
 package com.jin.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jin.entity.AO.BookAO;
 import com.jin.entity.DO.BookDO;
+import com.jin.entity.VO.BookVO;
 import com.jin.mapper.BookMapper;
 import com.jin.service.BookService;
 
@@ -25,6 +28,11 @@ public class BookServiceImpl implements BookService {
 		BookDO bookDo = new BookDO();
 		BeanUtils.copyProperties(bookAo, bookDo);
 		bookMapper.saveBook(bookDo);
+	}
+
+	@Override
+	public List<BookVO> getBookList() {
+		return bookMapper.getBookList();
 	}
 
 }

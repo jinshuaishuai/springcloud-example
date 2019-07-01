@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jin.mapper.BookMapper">
+	<resultMap type="com.jin.entity.DO.BookDO" id="BaseBookMap">
+		<result column="id" jdbcType="INTEGER" property="id"/>
+		<result column="book_name" jdbcType="VARCHAR" property="bookName"/>
+		<result column="book_price" jdbcType="INTEGER" property="bookPrice"/>
+		<result column="address" jdbcType="VARCHAR" property="address"/>
+		<result column="phone" jdbcType="VARCHAR" property="phone"/>
+		<result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+		<result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+	
+	</resultMap>
 	<insert id="saveBook" parameterType="com.jin.entity.DO.BookDO">
 		
 		insert into book
@@ -45,5 +55,7 @@
 				</if>
 			</trim>
 	</insert>
-
+	<select id="getBookList" resultMap="BaseBookMap">
+		select * from book;
+	</select>
 </mapper>
