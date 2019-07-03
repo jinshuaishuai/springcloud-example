@@ -28,7 +28,7 @@ public class BookController {
 	
 	@Autowired BookService bookService;
 	
-	@PostMapping("/saveBook")
+	@PostMapping("/saveBook1")
 	public RestResponse<String> saveBook(@RequestBody @Valid BookAO book, BindingResult result) {
 		log.info("saveBook接口入参为：------------->{}",book);
 		if(result.hasErrors()) {
@@ -41,6 +41,46 @@ public class BookController {
 		}
 		bookService.saveBook(book);
 		return null;
+	}
+	
+	@PostMapping("/saveBook")
+	public RestResponse<String> saveBook(
+	@RequestParam String bookName,
+			@RequestParam Integer bookPrice,
+			@RequestParam String address,
+			@RequestParam String phone
+	
+			/*
+			 * @RequestBody BookAO bookAO*/
+			/*
+			 * HttpServletRequest request
+			 * */) {
+			 
+		/*
+		Enumeration<String> names = request.getParameterNames();
+		log.info("names ------->{}", names.toString());
+		System.out.println(names.hasMoreElements());
+		while(names.hasMoreElements()) {
+			
+			String element = names.nextElement();
+			System.out.println(element);
+			System.out.println(request.getParameter(element));
+			log.info(" " + request.getParameter(element));
+		}
+		*/
+		log.info("bookName -> {},bookPrice -> {},address -> {},phone -> {}",bookName,bookPrice,address,phone);
+//		log.info("book -> {}", bookAO.toString());
+		BookAO bookAO = new BookAO();
+		bookAO.setBookName(bookName);
+		bookAO.setBookPrice(bookPrice);
+		bookAO.setAddress(address);
+		bookAO.setPhone(phone);
+		try {
+			bookService.saveBook(bookAO);
+		} catch(Exception e) {
+			return RestResponse.error("500", e.toString());
+		}
+		return RestResponse.success("SUCCESS");
 	}
 	
 	@GetMapping("/getBookList")

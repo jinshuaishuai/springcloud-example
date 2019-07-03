@@ -6,12 +6,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.Range;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class BookAO {
 	
 	@NotBlank(message = "书名不能为空\n")
@@ -32,9 +33,8 @@ public class BookAO {
 	private String phone;
 	
 	private String author;
-	
-	@NotBlank(message = "不能为空")
-	@CreditCardNumber
+//	@NotEmpty
+//	@Email
 	private String remark;
 	
 	private String press;
