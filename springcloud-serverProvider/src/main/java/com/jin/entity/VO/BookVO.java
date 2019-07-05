@@ -14,6 +14,8 @@ public class BookVO{
 	
 	private String phone;
 	
+	private Byte isDelete;
+	
 	private String createTime;
 	
 	private String updateTime;

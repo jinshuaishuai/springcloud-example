@@ -44,3 +44,10 @@ management:
 mybatis:
   mapper-locations:  classpath:mapper/*.xml
       
+      
+#分页配置
+pagehelper:
+  helperDialect:  mysql
+  reasonable:  false
+  supportMethodsArguments:  true
+  params:  count=countSql

@@ -7,6 +7,7 @@
 		<result column="book_price" jdbcType="INTEGER" property="bookPrice"/>
 		<result column="address" jdbcType="VARCHAR" property="address"/>
 		<result column="phone" jdbcType="VARCHAR" property="phone"/>
+		<result column="is_delete" jdbcType="TINYINT" property="isDelete"/>
 		<result column="create_time" jdbcType="VARCHAR" property="createTime"/>
 		<result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
 	
@@ -26,6 +27,9 @@
 				</if>
 				<if test="phone != null and phone != ''">
 					phone,
+				</if>
+				<if test="isDelete != null">
+					is_delete,
 				</if>
 				<if test="createTime != null and createTime != ''">
 					create_time,
@@ -47,6 +51,9 @@
 				<if test="phone != null and phone != ''">
 					#{phone,jdbcType=VARCHAR},
 				</if>
+				<if test="isDelete != null">
+					#{isDelete,jdbcType=TINYINT},
+				</if>
 				<if test="createTime != null and createTime != ''">
 					#{createTime,jdbcType=TIMESTAMP},
 				</if>
@@ -56,13 +63,33 @@
 			</trim>
 	</insert>
 	<select id="getBookList" resultMap="BaseBookMap">
-		select * from book;
+		select id,book_name,book_price,address,phone,is_delete,date_format(create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+		date_format(update_time,'%Y-%m-%d %H:%i:%s') as update_time from book
 	</select>
 	<select id="getBookById" resultMap="BaseBookMap">
-		select id,book_name,book_price,address,phone,create_time,update_time from book
+		select id,book_name,book_price,address,phone,is_delete,date_format(create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+		date_format(update_time,'%Y-%m-%d %H:%i:%s') as update_time from book
 		<where>
 			<if test="id != null">
 				and id = #{id}
+			</if>
+		</where>
+	</select>
+	<select id="getBookByParams" parameterType="com.jin.entity.query.BookQuery" resultMap="BaseBookMap">
+		select id,book_name,book_price,address,phone,is_delete,date_format(create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+		date_format(update_time,'%Y-%m-%d %H:%i:%s') as update_time from book
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<if test="ids != null">
+				and id in
+				<foreach collection="ids" item="id" open="(" close=")" separator=",">
+					#{id}
+				</foreach>
+			</if>
+			<if test="isDelete != null">
+				and is_delete = #{isDelete}
 			</if>
 		</where>
 	</select>

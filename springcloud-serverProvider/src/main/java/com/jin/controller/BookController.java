@@ -14,11 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.jin.config.RestResponse;
 import com.jin.entity.AO.BookAO;
 import com.jin.entity.VO.BookVO;
+import com.jin.entity.query.BookQuery;
 import com.jin.service.BookService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -97,5 +101,19 @@ public class BookController {
 		log.info("id的值为：--------->{}", id);
 		BookVO bookVO = bookService.getBookById(id);
 		return RestResponse.success(bookVO);
+	}
+	
+	@ApiOperation(value = "条件查询图书信息伴随分页")
+	@PostMapping("/getBookByParams")
+	public RestResponse<Page<BookVO>> getBookByParams(@RequestBody BookQuery params) {
+		log.info("接口入参为：--->{}", params);
+		try {
+			Page<BookVO> books = bookService.getBookByParams(params);
+			PageInfo<BookVO> pageInfo = new PageInfo<>(books);
+			return RestResponse.success(pageInfo);
+		} catch (Exception e) {
+			log.error("getBookByParams接口出现错误信息--->{}", e.toString());
+			return RestResponse.error("500", e.toString());
+		}
 	}
 }

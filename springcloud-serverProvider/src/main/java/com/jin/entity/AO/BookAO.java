@@ -32,6 +32,8 @@ public class BookAO {
 	@Pattern(regexp = "^1[3456789]\\d{9}$", message = "手机号不正确")
 	private String phone;
 	
+	private Byte isDelete;
+	
 	private String author;
 //	@NotEmpty
 //	@Email
