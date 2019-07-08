@@ -34,7 +34,7 @@ public class AuthorController {
 	private AuthorInfoServer authorInfoService;
 	
 	@ApiOperation(value = "保存图书作者信息",notes = "")
-	@PostMapping("/saveAuthorInfo")
+	@PostMapping(value = "/saveAuthorInfo", produces = "application/json;charset=utf-8")
 	public RestResponse<String> saveAuthorInfo(@RequestBody @Valid AuthorInfoAO authorInfoAO,BindingResult result) {
 		log.info("请求入参为：---->{}",authorInfoAO);
 		

@@ -38,7 +38,7 @@ public class PageConfig {
 		prop.setProperty("supportMethodsArguments", supportMethodsArguments);
 		prop.setProperty("parms", params);
 		pageHelper.setProperties(prop);
-		
+
 		return pageHelper;
 	}
 }
