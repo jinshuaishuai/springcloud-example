@@ -3,29 +3,29 @@ package com.jin.config;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import com.github.pagehelper.PageHelper;
 
+import lombok.Data;
 import lombok.ToString;
 
-@Configuration
-@ConfigurationProperties(prefix = "pagehelper")
+@Component
+@Data
 @ToString
 public class PageConfig {
 	
-	@Value("${pagehelperDialect}")
+	@Value("${pagehelper.pagehelperDialect}")
 	private String pagehelperDialect;
 	
-	@Value("${reasonable}")
+	@Value("${pagehelper.reasonable}")
 	private String reasonable;
 	
-	@Value("${supportMethodsArguments}")
+	@Value("${pagehelper.supportMethodsArguments}")
 	private String supportMethodsArguments;
 	
-	@Value("${params}")
+	@Value("${pagehelper.params}")
 	private String params;
 	
 	@Bean
