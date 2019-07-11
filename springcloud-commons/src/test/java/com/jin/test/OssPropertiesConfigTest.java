@@ -3,8 +3,8 @@ package com.jin.test;
 import org.junit.Test;
 
 import com.google.gson.Gson;
+import com.jin.common.config.OssPropertiesConfig;
 import com.jin.common.util.HttpClientUtil;
-import com.jin.config.OssPropertiesConfig;
 
 public class OssPropertiesConfigTest {
 	

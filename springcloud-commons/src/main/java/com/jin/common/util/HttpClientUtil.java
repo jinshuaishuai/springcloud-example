@@ -1,4 +1,4 @@
-package com.jin.util;
+package com.jin.common.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,14 +33,17 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-	/**
-	 * 封装了一些采用HttpClient发送HTTP请求的方法
-	 */
+import lombok.extern.slf4j.Slf4j;
+/**
+ * 
+ * @author shuai.jin
+ * @datetime	2019.07.11 16:58
+ * @description	封装了一些采用HttpClient发送HTTP请求的方法
+ *
+ */
+@Slf4j
 public class HttpClientUtil {
-    public static Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
     private static final CloseableHttpClient httpClient;
     private static final String CHARSET = "UTF-8";
     private static final String APPLICATION_JSON = "application/json";
@@ -132,7 +135,7 @@ public class HttpClientUtil {
             }
             return doGet(url,headerMap);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return null;
     }
@@ -163,7 +166,7 @@ public class HttpClientUtil {
             }
             return doGet(url,headerMap);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return null;
     }
@@ -187,7 +190,7 @@ public class HttpClientUtil {
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode != 200) {
             httpGet.abort();
-            logger.error("HttpClientUtil,error status code:" + statusCode + "|request url:" + url);
+            log.error("HttpClientUtil,error status code:" + statusCode + "|request url:" + url);
             throw new RuntimeException("HttpClientUtil,error status code :" + statusCode);
         }
         HttpEntity entity = response.getEntity();
@@ -195,8 +198,8 @@ public class HttpClientUtil {
         if (entity != null) {
             result = EntityUtils.toString(entity, CHARSET);
             long end = System.currentTimeMillis();//new Date().getTime();
-            logger.info("HttpClientUtil,request url:" + url + "|time:" + (end - start) + "ms");
-            logger.debug("HttpClientUtil,response result :" + result);
+            log.info("HttpClientUtil,request url:" + url + "|time:" + (end - start) + "ms");
+            log.debug("HttpClientUtil,response result :" + result);
         }
         EntityUtils.consume(entity);
         response.close();
@@ -222,7 +225,7 @@ public class HttpClientUtil {
             return null;
         }
         // debug打印日志
-        logger.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
+        log.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
         try {
             long start = System.currentTimeMillis();//new Date().getTime();
             List<NameValuePair> pairs = null;
@@ -243,7 +246,7 @@ public class HttpClientUtil {
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
                 httpPost.abort();
-                logger.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|params:" + params.toString());
+                log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|params:" + params.toString());
                 throw new RuntimeException("HttpClient,error status code :" + statusCode);
             }
             HttpEntity entity = response.getEntity();
@@ -251,15 +254,15 @@ public class HttpClientUtil {
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
                 long end = new Date().getTime();
-                logger.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
-                logger.debug("HttpClientUtil,response result :" + result);
+                log.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
+                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
         } catch (Exception e) {
-            logger.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
-            logger.error(e.getMessage(), e);
+            log.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
+            log.error(e.getMessage(), e);
         }
         return null;
     }
@@ -282,7 +285,7 @@ public class HttpClientUtil {
             return null;
         }
         // debug打印日志
-        logger.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
+        log.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
         try {
             long start = System.currentTimeMillis();//new Date().getTime();
             List<NameValuePair> pairs = null;
@@ -310,7 +313,7 @@ public class HttpClientUtil {
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
                 httpPost.abort();
-                logger.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|params:" + params.toString());
+                log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|params:" + params.toString());
                 throw new RuntimeException("HttpClient,error status code :" + statusCode);
             }
             HttpEntity entity = response.getEntity();
@@ -318,15 +321,15 @@ public class HttpClientUtil {
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
                 long end = new Date().getTime();
-                logger.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
-                logger.debug("HttpClientUtil,response result :" + result);
+                log.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
+                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
         } catch (Exception e) {
-            logger.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
-            logger.error(e.getMessage(), e);
+            log.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
+            log.error(e.getMessage(), e);
         }
         return null;
     }
@@ -347,7 +350,7 @@ public class HttpClientUtil {
             return null;
         }
         // debug打印日志
-        logger.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
+        log.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
         try {
             long start = System.currentTimeMillis();//new Date().getTime();
             List<NameValuePair> pairs = null;
@@ -369,7 +372,7 @@ public class HttpClientUtil {
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
                 httpPost.abort();
-                logger.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|params:" + params.toString());
+                log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|params:" + params.toString());
                 throw new RuntimeException("HttpClient,error status code :" + statusCode);
             }
             HttpEntity entity = response.getEntity();
@@ -377,15 +380,15 @@ public class HttpClientUtil {
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
                 long end = new Date().getTime();
-                logger.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
-                logger.debug("HttpClientUtil,response result :" + result);
+                log.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
+                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
         } catch (Exception e) {
-            logger.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
-            logger.error(e.getMessage(), e);
+            log.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
+            log.error(e.getMessage(), e);
         }
         return null;
     }
@@ -404,7 +407,7 @@ public class HttpClientUtil {
             return null;
         }
         // debug打印日志
-        logger.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
+        log.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
 
         try {
             long start = System.currentTimeMillis();//new Date().getTime();
@@ -429,7 +432,7 @@ public class HttpClientUtil {
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
                 httpPost.abort();
-                logger.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|params:" + params.toString());
+                log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|params:" + params.toString());
                 throw new RuntimeException("HttpClient,error status code :" + statusCode);
             }
             HttpEntity entity = response.getEntity();
@@ -437,15 +440,15 @@ public class HttpClientUtil {
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
                 long end = new Date().getTime();
-                logger.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
-                logger.debug("HttpClientUtil,response result :" + result);
+                log.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
+                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
         } catch (Exception e) {
-            logger.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
-            logger.error(e.getMessage(), e);
+            log.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
+            log.error(e.getMessage(), e);
         }
         return null;
     }
@@ -467,7 +470,7 @@ public class HttpClientUtil {
             return null;
         }
     	
-        logger.debug("HttpClientUtil,request url:" + url + " and params:" + json);
+        log.debug("HttpClientUtil,request url:" + url + " and params:" + json);
     	try{
 //    		long start = System.currentTimeMillis();//new Date().getTime();
     		HttpPost httpPost = new HttpPost(url);
@@ -479,7 +482,7 @@ public class HttpClientUtil {
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
                 httpPost.abort();
-                logger.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|json:" + json);
+                log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|json:" + json);
                 throw new RuntimeException("HttpClient,error status code :" + statusCode);
             }
             HttpEntity entity = response.getEntity();
@@ -487,15 +490,15 @@ public class HttpClientUtil {
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
 //                long end = System.currentTimeMillis();//new Date().getTime();
-                //logger.info("HttpClientUtil,request url:" + url + "|json:" + json + "|time:" + (end - start) + "ms");
-                logger.debug("HttpClientUtil,response result :" + result);
+                //log.info("HttpClientUtil,request url:" + url + "|json:" + json + "|time:" + (end - start) + "ms");
+                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
     	}catch(Exception e){
-    		 logger.error("HttpClientUtil,error request url:" + url + "|json:" + json);
-             logger.error(e.getMessage(), e);
+    		 log.error("HttpClientUtil,error request url:" + url + "|json:" + json);
+             log.error(e.getMessage(), e);
     	}
     	return null;
     }
@@ -516,7 +519,7 @@ public class HttpClientUtil {
         }
     	long start = 0;
     	long end = 0 ;
-        logger.debug("HttpClientUtil,request url:" + url + " and params:" + json);
+        log.debug("HttpClientUtil,request url:" + url + " and params:" + json);
     	try{
     		start = System.currentTimeMillis();//new Date().getTime();
     		HttpPost httpPost = new HttpPost(url);
@@ -536,7 +539,7 @@ public class HttpClientUtil {
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
                 httpPost.abort();
-                logger.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|json:" + json);
+                log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|json:" + json);
                 throw new RuntimeException("HttpClient,error status code :" + statusCode);
             }
             HttpEntity entity = response.getEntity();
@@ -544,23 +547,23 @@ public class HttpClientUtil {
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
                 end = System.currentTimeMillis();//new Date().getTime();
-                logger.info("HttpClientUtil,request url:" + url + "|json:" + json + "|time:" + (end - start) + "ms");
-                logger.debug("HttpClientUtil,response result :" + result);
+                log.info("HttpClientUtil,request url:" + url + "|json:" + json + "|time:" + (end - start) + "ms");
+                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
     	}catch(ConnectTimeoutException e){
     		end = System.currentTimeMillis();//new Date().getTime();
-    		logger.error("HttpClientUtil,error timeout request url:" + url + "|json:" + json+ "|time:" + (end - start) + "ms");
-    		logger.error(e.getMessage(), e);
+    		log.error("HttpClientUtil,error timeout request url:" + url + "|json:" + json+ "|time:" + (end - start) + "ms");
+    		log.error(e.getMessage(), e);
     	}catch(SocketTimeoutException e){
     		end = System.currentTimeMillis();//new Date().getTime();
-   		 	logger.error("HttpClientUtil,error timeout request url:" + url + "|json:" + json+ "|time:" + (end - start) + "ms");
-   		 	logger.error(e.getMessage(), e);
+   		 	log.error("HttpClientUtil,error timeout request url:" + url + "|json:" + json+ "|time:" + (end - start) + "ms");
+   		 	log.error(e.getMessage(), e);
     	}catch(Exception e){
-    		 logger.error("HttpClientUtil,error request url:" + url + "|json:" + json);
-             logger.error(e.getMessage(), e);
+    		 log.error("HttpClientUtil,error request url:" + url + "|json:" + json);
+             log.error(e.getMessage(), e);
     	}
     	return null;
     }   
@@ -581,7 +584,7 @@ public class HttpClientUtil {
             return null;
         }
     	
-        logger.debug("HttpClientUtil,request url:" + url + " and params:" + json);
+        log.debug("HttpClientUtil,request url:" + url + " and params:" + json);
     	try{
     		long start = System.currentTimeMillis();//new Date().getTime();
     		HttpPost httpPost = new HttpPost(url);
@@ -593,7 +596,7 @@ public class HttpClientUtil {
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
                 httpPost.abort();
-                logger.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|json:" + json);
+                log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|json:" + json);
                 throw new RuntimeException("HttpClient,error status code :" + statusCode);
             }
             HttpEntity entity = response.getEntity();
@@ -601,15 +604,15 @@ public class HttpClientUtil {
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
                 long end = System.currentTimeMillis();//new Date().getTime();
-                logger.info("HttpClientUtil,request url:" + url + "|json:" + json + "|time:" + (end - start) + "ms");
-                logger.debug("HttpClientUtil,response result :" + result);
+                log.info("HttpClientUtil,request url:" + url + "|json:" + json + "|time:" + (end - start) + "ms");
+                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
     	}catch(Exception e){
-    		 logger.error("HttpClientUtil,error request url:" + url + "|json:" + json);
-             logger.error(e.getMessage(), e);
+    		 log.error("HttpClientUtil,error request url:" + url + "|json:" + json);
+             log.error(e.getMessage(), e);
     	}
     	return null;
     }

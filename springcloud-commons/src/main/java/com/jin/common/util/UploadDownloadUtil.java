@@ -1,4 +1,4 @@
-package com.jin.util;
+package com.jin.common.util;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -14,13 +14,23 @@ import org.apache.commons.io.FilenameUtils;
 import com.aliyun.oss.OSSClient;
 
 import lombok.extern.slf4j.Slf4j;
+/**
+ * 
+ * @author		shuai.jin
+ * @datetime	2019.07.11
+ * @description	封装文件上传下载工具类，隐藏OSS连接操作
+ * @see			OssClientUtil
+ * @see			OSSClient
+ * @see			FilenameUtils
+ *
+ */
 @Slf4j
 public class UploadDownloadUtil {
 	/**
 	 * @param file	上传本地文件,一个具体的文件，例如a.doc b.txt c.jpg d.jpeg e.pdf
 	 * @return		上传成功返回一个oss服务器图片保存路径，否则返回null
 	 */
-	public static String uploadLocalFile(File file) {
+	public static String uploadLocalFile2OSS(File file) {
 		if(file.isFile()) {
 			OSSClient ossClient = OssClientUtil.getOssClient();
 			String fileName = GenerateFileNameUtil.generateFileName(file, OssClientUtil.bucketName);
@@ -64,6 +74,7 @@ public class UploadDownloadUtil {
 		byte[] arr = new byte[1024];
 		int len = 0;
 		File file = new File(localPath);
+		//此时传入的是一个文件夹，如果不存在，则新建
 		if(!file.exists()) {
 			file.mkdirs();
 		}
