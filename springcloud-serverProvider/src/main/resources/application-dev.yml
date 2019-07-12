@@ -4,10 +4,10 @@ server:
 spring:
   application:
     name: server-provider     #这个配置很重要
-  boot:
-    admin:
-      client:
-        url:  http://localhost:8783
+#  boot:
+#    admin:
+#      client:
+#        url:  http://localhost:8783
   datasource:
     #默认的采用Tomcat数据源
     #driver-class-name:  com.mysql.jdbc.Driver
@@ -19,29 +19,29 @@ spring:
     druid:
       connection-init-sqls:  set names utf8mb4
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/demo2?characterEncodeing=utf8mb4
+      url: jdbc:mysql://192.168.192.134:3306/test1?characterEncodeing=utf8mb4
       username: root
       password: root
       
 #配置consul，将该服务注册到consul上
 
-  cloud:
-   consul:
-      host: localhost
-      port: 8500
-      enabled: true
-      discovery:
-        heartbeat:
-          enabled: true
-        tags: server-provider1
-        service-name: server-provider          #注册到consul上的服务提供者名称
-        instance-id: server-provider1
-        health-check-interval: 15s
-        enabled: true
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone:  http://localhost:8761/eureka/   #注册到服务注册中心
+#  cloud:
+#   consul:
+#      host: localhost
+#      port: 8500
+#      enabled: true
+#      discovery:
+#        heartbeat:
+#          enabled: true
+#        tags: server-provider1
+#        service-name: server-provider          #注册到consul上的服务提供者名称
+#        instance-id: server-provider1
+#        health-check-interval: 15s
+ #       enabled: true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:8761/eureka/   #注册到服务注册中心
 management:
   endpoints:
     web:

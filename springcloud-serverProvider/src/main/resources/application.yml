@@ -4,5 +4,5 @@ spring:
     - dev
 debug: true   #开启日志
 logging:
-  path: /Users/rose/mylog/service-provider1
+  path: D:\mylog\service-provider1
   file: service-provider1
