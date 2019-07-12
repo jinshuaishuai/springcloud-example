@@ -1,10 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jin.mapper.BookMapper">
+	<resultMap type="com.jin.entity.DO.BookDO" id="BaseBookMap">
+		<result column="id" jdbcType="INTEGER" property="id"/>
+		<result column="book_name" jdbcType="VARCHAR" property="bookName"/>
+		<result column="book_price" jdbcType="INTEGER" property="bookPrice"/>
+		<result column="address" jdbcType="VARCHAR" property="address"/>
+		<result column="phone" jdbcType="VARCHAR" property="phone"/>
+		<result column="is_delete" jdbcType="TINYINT" property="isDelete"/>
+		<result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+		<result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+	
+	</resultMap>
 	<insert id="saveBook" parameterType="com.jin.entity.DO.BookDO">
-		insert into book(book_name,book_price,address,phone)
-		values(#{bookName,jdbcType=VARCHAR},#{bookPrice,jdbcType=INTEGER},#{address,jdbcType=VARCHAR},
-		#{phone,jdbcType=VARCHAR})
+		
+		insert into book
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="bookName != null and bookName != ''">
+					book_name,
+				</if>
+				<if test="bookPrice != null">
+					book_price,
+				</if>
+				<if test="address != null and address != ''">
+					address,
+				</if>
+				<if test="phone != null and phone != ''">
+					phone,
+				</if>
+				<if test="isDelete != null">
+					is_delete,
+				</if>
+				<if test="createTime != null and createTime != ''">
+					create_time,
+				</if>
+				<if test="updateTime != null and updateTime != ''">
+					update_time,
+				</if>
+			</trim>
+			<trim prefix="values(" suffix=")" suffixOverrides=",">
+				<if test="bookName != null and bookName != ''">
+					#{bookName,jdbcType=VARCHAR},
+				</if>
+				<if test="bookPrice != null">
+					#{bookPrice,jdbcType=INTEGER},
+				</if>
+				<if test="address != null and address != ''">
+					#{address,jdbcType=VARCHAR},
+				</if>
+				<if test="phone != null and phone != ''">
+					#{phone,jdbcType=VARCHAR},
+				</if>
+				<if test="isDelete != null">
+					#{isDelete,jdbcType=TINYINT},
+				</if>
+				<if test="createTime != null and createTime != ''">
+					#{createTime,jdbcType=TIMESTAMP},
+				</if>
+				<if test="updateTime != null and updateTime != ''">
+					#{updateTime,jdbcType=TIMESTAMP},
+				</if>
+			</trim>
 	</insert>
-
+	<select id="getBookList" resultMap="BaseBookMap">
+		select id,book_name,book_price,address,phone,is_delete,date_format(create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+		date_format(update_time,'%Y-%m-%d %H:%i:%s') as update_time from book
+	</select>
+	<select id="getBookById" resultMap="BaseBookMap">
+		select id,book_name,book_price,address,phone,is_delete,date_format(create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+		date_format(update_time,'%Y-%m-%d %H:%i:%s') as update_time from book
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+		</where>
+	</select>
+	<select id="getBookByParams" parameterType="com.jin.entity.query.BookQuery" resultMap="BaseBookMap">
+		select id,book_name,book_price,address,phone,is_delete,date_format(create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+		date_format(update_time,'%Y-%m-%d %H:%i:%s') as update_time from book
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<if test="ids != null">
+				and id in
+				<foreach collection="ids" item="id" open="(" close=")" separator=",">
+					#{id}
+				</foreach>
+			</if>
+			<if test="isDelete != null">
+				and is_delete = #{isDelete}
+			</if>
+		</where>
+	</select>
 </mapper>

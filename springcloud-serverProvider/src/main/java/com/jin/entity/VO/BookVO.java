@@ -1,17 +1,9 @@
-package com.jin.entity.DO;
-
-import java.io.Serializable;
+package com.jin.entity.VO;
 
 import lombok.Data;
 @Data
-public class BookDO implements Serializable {
+public class BookVO{
 	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	private Integer id;
 	
 	private String bookName;

@@ -9,11 +9,20 @@ spring:
       client:
         url:  http://localhost:8783
   datasource:
-    driver-class-name:  com.mysql.jdbc.Driver
-    url:  jdbc:mysql://localhost:3306/demo1
-    username:  root
-    password:  root
-    
+    #默认的采用Tomcat数据源
+    #driver-class-name:  com.mysql.jdbc.Driver
+    #url:  jdbc:mysql://localhost:3306/demo2?characterEncodeing=utf8mb4
+    #username:  root
+    #password:  root
+    #显式配置druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      connection-init-sqls:  set names utf8mb4
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/demo2?characterEncodeing=utf8mb4
+      username: root
+      password: root
+      
 #配置consul，将该服务注册到consul上
 
   cloud:
@@ -44,3 +53,18 @@ management:
 mybatis:
   mapper-locations:  classpath:mapper/*.xml
       
+#阿里OSS图片服务配置
+ossConfig:
+  ossSource: 1
+  stsUser: supplier_third_part
+  source: 40
+  authPath: jinshuai/testing/public/2019/07/08
+  ossRegion: cn-beijing
+  url: http://tmoses.ofashion.com.cn:97/get_interface_oss_sts_key
+       
+#分页配置
+pagehelper:
+  pagehelperDialect: mysql
+  reasonable: false
+  supportMethodsArguments: true
+  params: count=countSql

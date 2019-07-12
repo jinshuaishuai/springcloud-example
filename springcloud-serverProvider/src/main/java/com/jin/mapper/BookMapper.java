@@ -1,8 +1,14 @@
 package com.jin.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import com.github.pagehelper.Page;
 import com.jin.entity.DO.BookDO;
+import com.jin.entity.VO.BookVO;
+import com.jin.entity.query.BookQuery;
 
 @Mapper
 public interface BookMapper {
@@ -12,5 +18,19 @@ public interface BookMapper {
 	 * @param bookDo
 	 */
 	void saveBook(BookDO bookDo);
+	/**
+	 * 获取图书列表
+	 * @return
+	 */
+	List<BookVO> getBookList();
+	/**
+	 * 根据id查询一本书
+	 * @param id
+	 * @return
+	 */
+	BookDO getBookById(@Param("id") Integer id);
+	
+	
+	Page<BookDO> getBookByParams(BookQuery params);
 	
 }
