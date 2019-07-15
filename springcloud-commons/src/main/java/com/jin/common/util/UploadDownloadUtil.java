@@ -12,8 +12,10 @@ import java.util.UUID;
 import org.apache.commons.io.FilenameUtils;
 
 import com.aliyun.oss.OSSClient;
+import com.jin.entity.pojo.ImageInfo;
 
 import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
 /**
  * 
  * @author		shuai.jin
@@ -27,10 +29,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UploadDownloadUtil {
 	/**
-	 * @param file	上传本地文件,一个具体的文件，例如a.doc b.txt c.jpg d.jpeg e.pdf
+	 * @param file	上传本地图片
 	 * @return		上传成功返回一个oss服务器图片保存路径，否则返回null
 	 */
-	public static String uploadLocalFile2OSS(File file) {
+	public static ImageInfo uploadLocalFile2OSS(File file) {
 		if(file.isFile()) {
 			OSSClient ossClient = OssClientUtil.getOssClient();
 			String fileName = GenerateFileNameUtil.generateFileName(file, OssClientUtil.bucketName);
@@ -42,7 +44,13 @@ public class UploadDownloadUtil {
 				ossClient.shutdown();
 				//文件成功上传到阿里OSS服务器后，删除本地文件
 				file.delete();
-				return url;
+				String doGet = HttpClientUtil.doGet(url + "@info", null);
+				//返回上传到阿里OSS服务器的图片信息
+				JSONObject fromObject = JSONObject.fromObject(doGet);
+				ImageInfo imageInfo = (ImageInfo) JSONObject.toBean(fromObject,ImageInfo.class);
+				imageInfo.setUrl(url);
+				log.info("imageInfo --->{}", imageInfo);
+				return imageInfo;
 			} catch(Exception e) {
 				//文件上传到OSS服务器出现错误
 				log.error(e.toString());

@@ -52,10 +52,10 @@ public class HttpClientUtil {
     public static final int DEFAULT_MAX_PER_ROUTE = 10;
     // 客户端总并行链接最大数。默认值总连接数不能超过200
     public static final int MAX_TOTAL = 200;
-    // http连接超时时间。默认值设置为30秒
-    public static final int CONNECT_TIMEOUT = 30000;
-    // socket连接超时时间。默认值设置为15秒
-    public static final int SOCKET_TIMEOUT = 15000;
+    // http连接超时时间。默认值设置为60秒
+    public static final int CONNECT_TIMEOUT = 600000;
+    // socket连接超时时间。默认值设置为60秒
+    public static final int SOCKET_TIMEOUT = 600000;
     
     static {
 

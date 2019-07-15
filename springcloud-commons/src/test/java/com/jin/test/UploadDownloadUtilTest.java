@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.jin.common.util.UploadDownloadUtil;
+import com.jin.entity.pojo.ImageInfo;
 
 public class UploadDownloadUtilTest {
 
@@ -21,8 +22,8 @@ public class UploadDownloadUtilTest {
 	
 	@Test
 	public void testUploadFile() {
-		File file = new File("/Users/rose/Downloads/e0955491-a280-4105-a30a-5ce421dd3911.jpg");
-		String localFile = UploadDownloadUtil.uploadLocalFile2OSS(file);
-		System.out.println(localFile);
+		File file = new File("/Users/rose/Downloads/meinv.jpeg");
+		ImageInfo imageInfo = UploadDownloadUtil.uploadLocalFile2OSS(file);
+		System.out.println(imageInfo);
 	}
 }
