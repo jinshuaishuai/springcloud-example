@@ -115,6 +115,11 @@
 			       </exclusion>
 			</exclusions>
 		</dependency>
+		<!-- jedis依赖 -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+	    </dependency>
 		<!-- 阿里云日志服务依赖end -->
 	</dependencies>
 	<repositories>
