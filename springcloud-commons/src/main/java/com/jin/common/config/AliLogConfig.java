@@ -8,13 +8,13 @@ package com.jin.common.config;
  */
 public class AliLogConfig {
 	
-	public static final String ENDPOINT = "your_endpoint";
+	public static final String ENDPOINT = "xxx";
 	
-	public static final String  ACCESSKEYID = "your_accessKeyId";
+	public static final String  ACCESSKEYID = "xxx";
 	
-	public static final String ACCESSKEYSECRET = "your_accessKeySecret";
+	public static final String ACCESSKEYSECRET = "xxx";
 	
-	public static final String PROJECT = "your_project";
+	public static final String PROJECT = "xxx";
 	
-	public static final String LOGSTORE = "your_logstore";
+	public static final String LOGSTORE = "xxx";
 }
