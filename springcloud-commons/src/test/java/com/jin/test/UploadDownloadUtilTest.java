@@ -22,7 +22,7 @@ public class UploadDownloadUtilTest {
 	
 	@Test
 	public void testUploadFile() {
-		File file = new File("/Users/rose/Downloads/meinv.jpeg");
+		File file = new File("/Users/rose/Downloads/cf6c58ff-a792-4ee0-9ff6-71142752d346.jpg");
 		ImageInfo imageInfo = UploadDownloadUtil.uploadLocalFile2OSS(file);
 		System.out.println(imageInfo);
 	}

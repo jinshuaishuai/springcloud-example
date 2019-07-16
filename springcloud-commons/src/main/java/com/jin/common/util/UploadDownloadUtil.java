@@ -67,7 +67,7 @@ public class UploadDownloadUtil {
 	 * @return				返回文件保存的本地路径+文件名
 	 * @throws IOException
 	 */
-	public	static String downloadFileFromNet2Local(String fileUrl,String localPath) throws IOException {
+	public static String downloadFileFromNet2Local(String fileUrl,String localPath) throws IOException {
 		
 		//获取网络文件后缀名
 		String extension = FilenameUtils.getExtension(fileUrl);
