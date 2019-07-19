@@ -13,9 +13,9 @@ public class AliLogUtilTest {
 	public void testPutLog() {
 		Map<String, String> data = new HashMap<>();
 		
-//		data.put("barCode", "123456");
-//		data.put("name", "靳帅");
-//		data.put("age", "25");
+		data.put("barCode", "123456");
+		data.put("name", "zhangsan");
+		data.put("age", "25");
 		
 		try {
 			AliLogUtil.putLog(data, "篮球运动员", "NBA");

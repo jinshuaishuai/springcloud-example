@@ -16,6 +16,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * 阿里日志服务工具类
+ * @see		LogItem
+ * @see		Vector
+ * @author shaui.jin
+ *
+ */
 @Data
 @NoArgsConstructor
 @ToString

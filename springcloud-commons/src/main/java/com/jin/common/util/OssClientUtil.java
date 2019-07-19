@@ -48,7 +48,7 @@ public class OssClientUtil {
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
-		
+		//解析数据
 		Rest rest = gson.fromJson(doPostWithJSON,Rest.class);
 		LinkedTreeMap<String, Object> original = (LinkedTreeMap<String, Object>) rest.getOriginal();
 		log.info("original value is ------>{}", original.toString());
