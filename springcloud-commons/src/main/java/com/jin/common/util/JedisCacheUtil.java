@@ -2281,7 +2281,7 @@ public class JedisCacheUtil {
          */
         public static void returnResource(JedisPool jedisPool, Jedis jedis) {
             if (jedis != null) {
-                jedisPool.returnResource(jedis);
+                jedisPool.close();
             }
         }
 
