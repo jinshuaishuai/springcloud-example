@@ -16,7 +16,12 @@ import redis.clients.jedis.BinaryClient;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.SortingParams;
-
+/**
+ * redis工具类，redis连接资源从redis资源池中获取，每次与redis交互完，该连接资源还释放，放回到redis资源池中
+ * 下次获取，还从池子中进行获取，不用重复的NEW，这样做，节约资源，节省开发时间
+ * @author shuai.jin
+ * @see		JedisPool
+ */
 @Component
 @Slf4j
 public class JedisCacheUtil {
@@ -2281,7 +2286,16 @@ public class JedisCacheUtil {
          */
         public static void returnResource(JedisPool jedisPool, Jedis jedis) {
             if (jedis != null) {
-                jedisPool.close();
+            	/*
+            	 * 该方法已过时
+            	 */
+//            	jedisPool.returnResource(jedis);
+            	/*
+            	 * 释放连接资源，这是必须进行的一步，当调用这个方法后，资源连接被释放，redis连接池自动回收该资源
+            	 * 还放回redis连接池中
+            	 */
+            	
+                jedis.close();
             }
         }
 
