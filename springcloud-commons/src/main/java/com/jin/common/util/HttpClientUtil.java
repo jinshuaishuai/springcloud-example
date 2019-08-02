@@ -285,7 +285,7 @@ public class HttpClientUtil {
             return null;
         }
         // debug打印日志
-        log.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
+//        log.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
         try {
             long start = System.currentTimeMillis();//new Date().getTime();
             List<NameValuePair> pairs = null;
@@ -313,7 +313,7 @@ public class HttpClientUtil {
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
                 httpPost.abort();
-                log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|params:" + params.toString());
+//                log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|params:" + params.toString());
                 throw new RuntimeException("HttpClient,error status code :" + statusCode);
             }
             HttpEntity entity = response.getEntity();
@@ -321,14 +321,14 @@ public class HttpClientUtil {
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
                 long end = new Date().getTime();
-                log.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
-                log.debug("HttpClientUtil,response result :" + result);
+//                log.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
+//                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
         } catch (Exception e) {
-            log.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
+//            log.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
             log.error(e.getMessage(), e);
         }
         return null;
