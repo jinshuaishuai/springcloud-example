@@ -22,11 +22,11 @@ import redis.clients.jedis.SortingParams;
  * @author shuai.jin
  * @see		JedisPool
  */
-@Component
+//@Component
 @Slf4j
 public class JedisCacheUtil {
 
-    @Autowired
+//    @Autowired
     private JedisPool jedisPool;
         /**
          * <p>
