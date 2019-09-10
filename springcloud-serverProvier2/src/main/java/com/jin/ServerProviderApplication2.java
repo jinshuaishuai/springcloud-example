@@ -7,6 +7,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 public class ServerProviderApplication2 {
 	public static void main(String[] args) {
+		
 		SpringApplication.run(ServerProviderApplication2.class, args);
+	
 	}
 }
