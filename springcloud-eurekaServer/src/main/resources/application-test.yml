@@ -1,7 +1,7 @@
 #服务注册中心1
 ---
 server:
-  port: 8761
+  port: 8826
   
 spring:
   application:
@@ -10,19 +10,20 @@ spring:
     
 eureka:
   instance:
-    hostname: peer1
+    hostname: 172.16.219.89
     
     prefer-ip-address: true
   client:
    # registerWithEureka: false
     #fetchRegistry: false
     serviceUrl:
-      defaultZone: http://peer2:8762/eureka,http://peer3:8763/eureka/
+      #defaultZone: http://peer2:8762/eureka,http://peer3:8763/eureka/    //这样做单机集群没有意义，要做成分布式环境下的集群
+      defaultZone: http://172.16.219.63:8826/eureka
       
 #服务注册中心2
 ---
 server:
-  port: 8762
+  port: 8826
   
 spring:
   application:
@@ -30,31 +31,11 @@ spring:
   profiles:  eurekaServer2 
 eureka:
   instance:
-    hostname: peer2
+    hostname: 172.16.219.63
     
   client:
     #registerWithEureka: false
     #fetchRegistry: false
     serviceUrl:
-      defaultZone: http://peer1:8761/eureka/,http://peer3:8763/eureka/
-      
-#服务注册中心3
----
-server:
-  port: 8763
-  
-spring:
-  application:
-    name: eureka-server
-  profiles:  eurekaServer3 
-eureka:
-  instance:
-    hostname: peer3
-    
-  client:
-    #registerWithEureka: false
-    #fetchRegistry: false
-    serviceUrl:
-      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
-      
+      defaultZone: http://172.16.219.89:8826/eureka/
       
