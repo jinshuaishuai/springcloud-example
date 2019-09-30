@@ -15,8 +15,6 @@ zuul:
       path: /good/**
       service-id: server-provider
       
-
-
 eureka:
   client:
     serviceUrl:
