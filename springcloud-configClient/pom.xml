@@ -55,6 +55,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+	    <!-- 引入消息总线 -->
+	    <dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

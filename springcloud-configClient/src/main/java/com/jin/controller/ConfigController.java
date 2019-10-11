@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RefreshScope
+@RefreshScope		//这个必须要加
 @RequestMapping("/config")
 public class ConfigController {
 	

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
+    <contextName>rabbitMQDemo</contextName>
+    <springProperty scope="context" name="${logging.file}" source="${logging.path}"
+                    defaultValue="DEBUG"/>
+    <property name="encoderPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level %file:%line - %msg%n" />
+    <springProperty scope="context" name="log.path" source="logging.path" defaultValue="${logging.path}"/>
+    <springProperty scope="context" name="log.file" source="logging.file" defaultValue="${logging.file}"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>${encoderPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/${log.file}_%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>${encoderPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.alibaba.druid" level="ERROR"/>
+    <logger name="org.mybatis" level="DEBUG"/>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.apache.http" level="ERROR"/>
+    <logger name="org.apache.coyote" level="ERROR"/>
+    <logger name="org.apache.catalina" level="ERROR"/>
+    <logger name="org.apache.tomcat" level="ERROR"/>
+    <logger name="com.netflix" level="ERROR"/>
+    <root level="${log.level}">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>
