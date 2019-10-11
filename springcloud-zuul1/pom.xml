@@ -18,7 +18,6 @@
 		<spring-cloud.version>Finchley.SR2</spring-cloud.version>
 	</properties>
 
-
 	<dependencies>
 		<!-- 引入boot监控起步依赖 -->
 		<dependency>
@@ -29,6 +28,16 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<!-- 引入springcloud配置客户端 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<!-- 引入消息总线 -->
+	    <dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-bus-amqp</artifactId>
 		</dependency>
 		<!-- 引入Zuul网关 -->
 		<dependency>

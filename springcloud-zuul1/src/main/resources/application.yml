@@ -4,6 +4,31 @@ server:
 spring:
   application:
     name: springcloud-zuul
+  #配置rabbitMQ
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: guest
+    port: 5672
+  #开启消息总线
+  cloud:
+    bus:
+      trace:
+        enabled: true
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:8761/eureka/
+      
+ #当更新配置文件时，要使其生效，执行一下这个命令：curl -X POST http://localhost:8766/actuator/bus-refresh     
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - bus-refresh   #这是一个坑的点，在springboot2.0之前的版本，不是这个配置
+  
     
 zuul:
   routes:
@@ -14,8 +39,3 @@ zuul:
     good:
       path: /good/**
       service-id: server-provider
-      
-eureka:
-  client:
-    serviceUrl:
-      defaultZone:  http://localhost:8761/eureka/
