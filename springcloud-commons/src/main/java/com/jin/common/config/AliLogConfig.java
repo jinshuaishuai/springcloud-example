@@ -15,4 +15,7 @@ public class AliLogConfig {
 	public static final String PROJECT = "xxx";
 	
 	public static final String LOGSTORE = "xxx";
+
+
+	//都已经删掉了啊
 }
