@@ -39,6 +39,8 @@ public class IPFilter extends ZuulFilter{
 		
 		//获取客户端ip
 		String remoteAddr = request.getRemoteAddr();
+		log.info("客户端ip为：--->{}", remoteAddr);
+		/*
 		String ipList = ips.substring(1, ips.length() - 1);
 		String[] split = ipList.split(",");
 		
@@ -61,7 +63,13 @@ public class IPFilter extends ZuulFilter{
 			context.set("isSuccess", false);
 			return null;
 		}
-		
+
+		 */
+		//去掉ip白名单拦截
+		context.setResponseStatusCode(200);
+		context.setSendZuulResponse(true);
+		context.set("isSuccess", true);
+		return null;
 	}
 
 	@Override
