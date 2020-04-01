@@ -5,16 +5,18 @@ spring:
   application:
     name: springcloud-zuul
   #配置rabbitMQ
-  rabbitmq:
-    host: localhost
-    username: guest
-    password: guest
-    port: 5672
+
+
+  #rabbitmq:
+  #  host: localhost
+  #  username: guest
+  #  password: guest
+  #  port: 5672
   #开启消息总线
   cloud:
     bus:
       trace:
-        enabled: true
+        enabled: false
     
 eureka:
   client:
