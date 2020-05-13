@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jin.service.HelloService;
 @Component
-public class HelloSerciceImpl implements HelloService {
+public class HelloSerciceHystrixImpl implements HelloService {
 
 	@Override
 	public String hello(@RequestParam(value = "name") String name) {

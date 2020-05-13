@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/provider1")
 @Slf4j
 public class HelloController {
 	

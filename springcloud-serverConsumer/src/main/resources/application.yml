@@ -12,5 +12,6 @@ eureka:
 #开启hystrix服务熔断机制
 feign:
   hystrix:
-    enabled: true #开启feign熔断机制
-    
+    enabled: true
+    #开启feign熔断机制,如果默认值为false的话，@FeignClient(name = "server-provider", fallback = HelloSerciceHystrixImpl.class)中的fallback不会起作用
+
