@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jin.mapper.yc.BiDepartmentInfoMapper" >
+    <resultMap id="BaseDepartmentResultMap" type="com.jin.entity.DO.yc.DepartmentDO" >
+        <id column="rec_id" property="recId" jdbcType="INTEGER" />
+        <result column="parent_dept_id" property="parentDeptId" jdbcType="INTEGER" />
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+        <result column="company_id" property="companyId" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="BIT" />
+        <result column="is_delete" property="isDelete" jdbcType="BIT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <insert id="addDepartment" parameterType="com.jin.entity.DO.yc.DepartmentDO" >
+        insert into bi_department_info
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="recId != null" >
+                rec_id,
+            </if>
+            <if test="parentDeptId != null" >
+                parent_dept_id,
+            </if>
+            <if test="deptName != null" >
+                dept_name,
+            </if>
+            <if test="companyId != null" >
+                company_id,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="isDelete != null" >
+                is_delete,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="updateTime != null" >
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="recId != null" >
+                #{recId,jdbcType=INTEGER},
+            </if>
+            <if test="parentDeptId != null" >
+                #{parentDeptId,jdbcType=INTEGER},
+            </if>
+            <if test="deptName != null" >
+                #{deptName,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null" >
+                #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=BIT},
+            </if>
+            <if test="isDelete != null" >
+                #{isDelete,jdbcType=BIT},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateDepartment" parameterType="com.jin.entity.DO.yc.DepartmentDO" >
+        update bi_department_info
+        <set >
+            <if test="parentDeptId != null" >
+                parent_dept_id = #{parentDeptId,jdbcType=INTEGER},
+            </if>
+            <if test="deptName != null" >
+                dept_name = #{deptName,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null" >
+                company_id = #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=BIT},
+            </if>
+            <if test="isDelete != null" >
+                is_delete = #{isDelete,jdbcType=BIT},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where rec_id = #{recId,jdbcType=INTEGER}
+    </update>
+    <select id="getDepartmentList" parameterType="com.jin.entity.query.yc.DepartmentQuery" resultMap="BaseDepartmentResultMap">
+        select distinct
+            rec_id, parent_dept_id, dept_name,
+            company_id, status, is_delete,
+            DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+            DATE_FORMAT(update_time, '%Y-%m-%d %H:%i:%s') as update_time
+        from bi_department_info
+        <where>
+            <if test="companyId != null">
+                and company_id = #{companyId, jdbcType=INTEGER}
+            </if>
+            <if test="recId != null">
+                and parent_dept_id = #{recId, jdbcType=INTEGER}
+            </if>
+                and is_delete = 0
+                and status = 0
+        </where>
+    </select>
+</mapper>

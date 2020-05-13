@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jin.mapper.yc.BiUserLoginInfoMapper" >
+    <resultMap id="BaseUserLoginResultMap" type="com.jin.entity.DO.yc.UserLoginDO" >
+        <id column="rec_id" property="recId" jdbcType="INTEGER" />
+        <id column="u_id" property="uId" jdbcType="INTEGER" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+        <result column="login_ip" property="loginIp" jdbcType="VARCHAR" />
+        <result column="is_delete" property="isDelete" jdbcType="BIT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <insert id="addUserLoginRecord" parameterType="com.jin.entity.DO.yc.UserLoginDO" >
+        insert into bi_user_login_info
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="recId != null" >
+                rec_id,
+            </if>
+            <if test="uId != null" >
+                u_id,
+            </if>
+            <if test="username != null" >
+                username,
+            </if>
+            <if test="loginTime != null" >
+                login_time,
+            </if>
+            <if test="loginIp != null" >
+                login_ip,
+            </if>
+            <if test="isDelete != null" >
+                is_delete,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="updateTime != null" >
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="recId != null" >
+                #{recId,jdbcType=INTEGER},
+            </if>
+            <if test="uId != null" >
+                #{uId,jdbcType=INTEGER},
+            </if>
+            <if test="username != null" >
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime != null" >
+                #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loginIp != null" >
+                #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null" >
+                #{isDelete,jdbcType=BIT},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="getUserLoginLogList" parameterType="int" resultMap="BaseUserLoginResultMap">
+        select distinct
+            rec_id, u_id, username,
+            DATE_FORMAT(login_time,'%Y-%m-%d %H:%i:%s') as login_time,
+            login_ip, is_delete,
+            DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+            DATE_FORMAT(update_time, '%Y-%m-%d %H:%i:%s') as update_time
+        from bi_user_login_info
+        <where>
+            u_id = #{uId, jdbcType=INTEGER}
+            and is_delete = 0
+        </where>
+    </select>
+</mapper>
