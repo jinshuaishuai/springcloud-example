@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class RestResponse<T> implements Serializable {
     //响应代码
-    private String code = "SUCCESS";
+    private String code = "200";
 
     //响应描述
     private String message = "操作成功";

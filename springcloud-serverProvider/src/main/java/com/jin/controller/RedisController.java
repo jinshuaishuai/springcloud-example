@@ -27,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Api(value = "redis服务接口", tags = "redis服务接口", produces = "http")
 public class RedisController {
+	/*
 	@Autowired
 	private JedisCacheUtil jedis;
 	
@@ -46,4 +47,6 @@ public class RedisController {
 		log.info("value的值为：------->{}", value);
 		return RestResponse.success(value);
 	}
+
+	 */
 }
