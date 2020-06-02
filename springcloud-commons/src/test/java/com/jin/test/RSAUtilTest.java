@@ -2,12 +2,14 @@ package com.jin.test;
 
 import com.jin.common.util.RSAUtil;
 import org.junit.Test;
+import org.springframework.util.Base64Utils;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.security.KeyPair;
+import java.security.MessageDigest;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
@@ -20,16 +22,12 @@ public class RSAUtilTest {
     @Test
     public void testRSA() throws Exception {
 
-       /* MessageDigest md5 = MessageDigest.getInstance(md5);
-        byte[] digest = md5.digest(admin.getBytes());
-        BASE64Encoder base64Encoder = new BASE64Encoder();
-        String encode = base64Encoder.encode(digest);
-        System.out.println(encode);*/
+        MessageDigest md5 = MessageDigest.getInstance("md5");
+        byte[] digest = md5.digest("abc".getBytes());
+        String s = Base64Utils.encodeToString(digest);
+        System.out.println(s);
 
-        KeyPair keyPair = RSAUtil.getKeyPair();
-        PrivateKey aPrivate = keyPair.getPrivate();
-        String decrypt = RSAUtil.decrypt("LRG4J9dogboAliI6yWg52gh5w2qOKyTjMKi9cvmvtu5t6OHX6rZCJIyDgFimZCu2v4OKFScCYosH/1CHcV7dAFq34UTeOakAkbKELcw3C/1Zul/JJ8ZIFq0L80i2UAI46TN1yOU/ijf7aQK88vulmRjvHRKBoSi4WaZaK3t3rZIt5vl9r72XjNFbIKPxSYfdcrvqbKztzMwQrrtr5Vu0SnIJGpmliU9nPep0F8sANSX5tWNcn2vRgbjnO1l1khPBbb9zCnXKg4T4u5/xJnTEGuqvbXPphgq1sYl9hwcsW8cQUC9KrW3jNH2jfswYQhPxEMBJAfqUs/sY+F8xYgdOcw==", aPrivate);
-        System.out.println(decrypt);
+
     }
 
     /**
