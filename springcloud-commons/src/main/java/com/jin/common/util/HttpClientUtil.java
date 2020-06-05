@@ -1,16 +1,7 @@
 package com.jin.common.util;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.SocketTimeoutException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -34,13 +25,17 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import lombok.extern.slf4j.Slf4j;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.SocketTimeoutException;
+import java.util.*;
+
 /**
- * 
  * @author shuai.jin
- * @datetime	2019.07.11 16:58
- * @description	封装了一些采用HttpClient发送HTTP请求的方法
- *
+ * @description 封装了一些采用HttpClient发送HTTP请求的方法
+ * @date 2020/6/2 10:16
  */
 @Slf4j
 public class HttpClientUtil {
@@ -48,15 +43,15 @@ public class HttpClientUtil {
     private static final String CHARSET = "UTF-8";
     private static final String APPLICATION_JSON = "application/json";
     private static final String APPLICATION_JSON_FORM = "application/x-www-form-urlencoded";
- // 每个主机的最大并行链接数,为每个区设置最大的并发连接数,默认每个路由基础上的连接不超过10个
+    // 每个主机的最大并行链接数,为每个区设置最大的并发连接数,默认每个路由基础上的连接不超过10个
     public static final int DEFAULT_MAX_PER_ROUTE = 10;
     // 客户端总并行链接最大数。默认值总连接数不能超过200
     public static final int MAX_TOTAL = 200;
-    // http连接超时时间。默认值设置为60秒
-    public static final int CONNECT_TIMEOUT = 600000;
-    // socket连接超时时间。默认值设置为60秒
-    public static final int SOCKET_TIMEOUT = 600000;
-    
+    // http连接超时时间。默认值设置为5分钟
+    public static final int CONNECT_TIMEOUT = 300000;
+    // socket连接超时时间。默认值设置为5分钟
+    public static final int SOCKET_TIMEOUT = 300000;
+
     static {
 
         PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
@@ -73,7 +68,7 @@ public class HttpClientUtil {
 
     /**
      * HTTP Get 获取内容,默认编码UTF-8
-     * 
+     *
      * @param url		请求的url地址
      * @param params	请求的参数
      * @return 			页面内容
@@ -84,7 +79,7 @@ public class HttpClientUtil {
 
     /**
      * HTTP Post 获取内容,默认编码UTF-8
-     * 
+     *
      * @param url		请求的url地址
      * @param params	请求的参数
      * @return 			页面内容
@@ -95,7 +90,7 @@ public class HttpClientUtil {
 
     /**
      * HTTP Post 获取内容,默认编码UTF-8
-     * 
+     *
      * @param url		请求的url地址 ?之前的地址
      * @param params	请求的参数
      * @return 页面内容
@@ -106,7 +101,7 @@ public class HttpClientUtil {
 
     /**
      * HTTP Get 获取内容
-     * 
+     *
      * @param url		请求的url地址
      * @param params	请求的参数 例如：将categoryNO=A01,A02 转成 categoryNO=A01&categoryNo=A02
      * @param spiltChar	参数值的分隔符
@@ -142,17 +137,17 @@ public class HttpClientUtil {
 
     /**
      * HTTP Get 获取内容
-     * 
+     *
      * @param url		请求的url地址
      * @param params	请求的参数
      * @param charset 	编码格式
      * @return 页面内容
      */
     public static String doGet(String url, Map<String, String> params,Map<String, String> headerMap, String charset) {
-    	if (StringUtils.isBlank(url)) {
+        if (StringUtils.isBlank(url)) {
             return null;
         }
-        
+
         try {
             if (params != null && !params.isEmpty()) {
                 List<NameValuePair> pairs = new ArrayList<NameValuePair>(params.size());
@@ -170,36 +165,32 @@ public class HttpClientUtil {
         }
         return null;
     }
-    
+
     public static String doGet(String url,Map<String, String> headerMap) throws RuntimeException,Exception{
-    	if (StringUtils.isBlank(url)) {
+        if (StringUtils.isBlank(url)) {
             return null;
         }
         long start = System.currentTimeMillis();//new Date().getTime();
-        
+
         HttpGet httpGet = new HttpGet(url);
-        
+
         if(headerMap != null && !headerMap.isEmpty()){
-        	for (Map.Entry<String,String> entry: headerMap.entrySet()){
-        		httpGet.setHeader(entry.getKey(), entry.getValue());
-			}
+            for (Map.Entry<String,String> entry: headerMap.entrySet()){
+                httpGet.setHeader(entry.getKey(), entry.getValue());
+            }
         }
-        
-        
+
+
         CloseableHttpResponse response = httpClient.execute(httpGet);
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode != 200) {
             httpGet.abort();
-            log.error("HttpClientUtil,error status code:" + statusCode + "|request url:" + url);
             throw new RuntimeException("HttpClientUtil,error status code :" + statusCode);
         }
         HttpEntity entity = response.getEntity();
         String result = null;
         if (entity != null) {
             result = EntityUtils.toString(entity, CHARSET);
-            long end = System.currentTimeMillis();//new Date().getTime();
-            log.info("HttpClientUtil,request url:" + url + "|time:" + (end - start) + "ms");
-            log.debug("HttpClientUtil,response result :" + result);
         }
         EntityUtils.consume(entity);
         response.close();
@@ -211,7 +202,7 @@ public class HttpClientUtil {
 
     /**
      * HTTP Post 获取内容
-     * 
+     *
      * @param url
      *            请求的url地址 ?之前的地址
      * @param params
@@ -221,13 +212,10 @@ public class HttpClientUtil {
      * @return 页面内容
      */
     public static String doPost(String url, Map<String, String> params, String charset) {
-    	if (StringUtils.isBlank(url)) {
+        if (StringUtils.isBlank(url)) {
             return null;
         }
-        // debug打印日志
-        log.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
         try {
-            long start = System.currentTimeMillis();//new Date().getTime();
             List<NameValuePair> pairs = null;
             if (params != null && !params.isEmpty()) {
                 pairs = new ArrayList<NameValuePair>(params.size());
@@ -253,23 +241,19 @@ public class HttpClientUtil {
             String result = null;
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
-                long end = new Date().getTime();
-                log.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
-                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
         } catch (Exception e) {
-            log.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
-            log.error(e.getMessage(), e);
+            e.printStackTrace();
         }
         return null;
     }
-    
+
     /**
      * HTTP Post 获取内容
-     * 
+     *
      * @param url
      *            请求的url地址 ?之前的地址
      * @param params
@@ -298,45 +282,40 @@ public class HttpClientUtil {
                     }
                 }
             }
-            
+
             HttpPost httpPost = new HttpPost(url);
             if (pairs != null && pairs.size() > 0) {
                 httpPost.setEntity(new UrlEncodedFormEntity(pairs, CHARSET));
             }
-            
+
             if(headerMap != null && !headerMap.isEmpty()){
-            	for (Map.Entry<String,String> entry: headerMap.entrySet()){
-            		httpPost.setHeader(entry.getKey(), entry.getValue());
-				}
+                for (Map.Entry<String,String> entry: headerMap.entrySet()){
+                    httpPost.setHeader(entry.getKey(), entry.getValue());
+                }
             }
             CloseableHttpResponse response = httpClient.execute(httpPost);
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
                 httpPost.abort();
-//                log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|params:" + params.toString());
                 throw new RuntimeException("HttpClient,error status code :" + statusCode);
             }
             HttpEntity entity = response.getEntity();
             String result = null;
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
-                long end = new Date().getTime();
-//                log.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
-//                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
         } catch (Exception e) {
-//            log.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
             log.error(e.getMessage(), e);
         }
         return null;
     }
-    
+
     /**
      * HTTP Post 获取内容
-     * 
+     *
      * @param url
      *            请求的url地址 ?之前的地址
      * @param params
@@ -349,8 +328,6 @@ public class HttpClientUtil {
         if (StringUtils.isBlank(url)) {
             return null;
         }
-        // debug打印日志
-        log.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
         try {
             long start = System.currentTimeMillis();//new Date().getTime();
             List<NameValuePair> pairs = null;
@@ -379,24 +356,20 @@ public class HttpClientUtil {
             String result = null;
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
-                long end = new Date().getTime();
-                log.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
-                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
         } catch (Exception e) {
-            log.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
             log.error(e.getMessage(), e);
         }
         return null;
     }
-  
+
 
     /**
      * 用于带文件的表单提交,也可用于普通表单提交，可多文件上传
-     * 
+     *
      * @param url
      *            上传接口的url
      * @param params
@@ -406,9 +379,6 @@ public class HttpClientUtil {
         if (StringUtils.isBlank(url)) {
             return null;
         }
-        // debug打印日志
-        log.debug("HttpClientUtil,request url:" + url + " and params:" + params.toString());
-
         try {
             long start = System.currentTimeMillis();//new Date().getTime();
             MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
@@ -439,20 +409,16 @@ public class HttpClientUtil {
             String result = null;
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
-                long end = new Date().getTime();
-                log.info("HttpClientUtil,request url:" + url + "|params:" + params.toString() + "|time:" + (end - start) + "ms");
-                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
         } catch (Exception e) {
-            log.error("HttpClientUtil,error request url:" + url + "|params:" + params.toString());
             log.error(e.getMessage(), e);
         }
         return null;
     }
-    
+
     /**
      * http post json 字符串请求
      * @param url
@@ -461,46 +427,40 @@ public class HttpClientUtil {
      * @throws Exception
      */
     public static String doPostWithJSON(String url, String json) throws Exception {
-    	return doPostWithJSON(url, json, CHARSET);
+        return doPostWithJSON(url, json, CHARSET);
     }
-    
-    public static String doPostWithJSON(String url, String json, String charset) throws Exception {
-        
-    	if (StringUtils.isBlank(url)) {
+
+    public static String doPostWithJSON(String url, String json, String charset) throws Exception{
+
+        if (StringUtils.isBlank(url)) {
             return null;
         }
-    	
+
         log.debug("HttpClientUtil,request url:" + url + " and params:" + json);
-    	try{
-//    		long start = System.currentTimeMillis();//new Date().getTime();
-    		HttpPost httpPost = new HttpPost(url);
-    		StringEntity stringEntity = new StringEntity(json, charset);
-    		stringEntity.setContentType(APPLICATION_JSON);
-    		stringEntity.setContentEncoding(charset);
-    		httpPost.setEntity(stringEntity);
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode != 200) {
-                httpPost.abort();
-                log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|json:" + json);
-                throw new RuntimeException("HttpClient,error status code :" + statusCode);
-            }
-            HttpEntity entity = response.getEntity();
-            String result = null;
-            if (entity != null) {
-                result = EntityUtils.toString(entity, CHARSET);
-//                long end = System.currentTimeMillis();//new Date().getTime();
-                //log.info("HttpClientUtil,request url:" + url + "|json:" + json + "|time:" + (end - start) + "ms");
-                log.debug("HttpClientUtil,response result :" + result);
-            }
-            EntityUtils.consume(entity);
-            response.close();
-            return result;
-    	}catch(Exception e){
-    		 log.error("HttpClientUtil,error request url:" + url + "|json:" + json);
-             log.error(e.getMessage(), e);
-    	}
-    	return null;
+
+        HttpPost httpPost = new HttpPost(url);
+        StringEntity stringEntity = new StringEntity(json, charset);
+        stringEntity.setContentType(APPLICATION_JSON);
+        stringEntity.setContentEncoding(charset);
+        httpPost.setEntity(stringEntity);
+        CloseableHttpResponse response = httpClient.execute(httpPost);
+        int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode != 200) {
+            httpPost.abort();
+            log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|json:" + json);
+            throw new RuntimeException("HttpClient,error status code :" + statusCode);
+
+
+        }
+        HttpEntity entity = response.getEntity();
+        String result = null;
+        if (entity != null) {
+            result = EntityUtils.toString(entity, CHARSET);
+        }
+        EntityUtils.consume(entity);
+        response.close();
+        return result;
+
     }
     /**
      * http post json 字符串请求
@@ -510,19 +470,15 @@ public class HttpClientUtil {
      * @throws Exception
      */
     public static String doPostWithJSON(String url, String json,int timeOut) throws Exception {
-    	return doPostWithJSON(url, json, CHARSET,timeOut);
+        return doPostWithJSON(url, json, CHARSET,timeOut);
     }
     public static String doPostWithJSON(String url, String json, String charset,int timeOut) throws Exception {
-        
-    	if (StringUtils.isBlank(url)) {
+
+        if (StringUtils.isBlank(url)) {
             return null;
         }
-    	long start = 0;
-    	long end = 0 ;
-        log.debug("HttpClientUtil,request url:" + url + " and params:" + json);
-    	try{
-    		start = System.currentTimeMillis();//new Date().getTime();
-    		HttpPost httpPost = new HttpPost(url);
+        try{
+            HttpPost httpPost = new HttpPost(url);
             RequestConfig requestConfig = RequestConfig.custom()
                     .setConnectionRequestTimeout(timeOut)
                     .setConnectTimeout(timeOut)
@@ -530,11 +486,11 @@ public class HttpClientUtil {
                     .setExpectContinueEnabled(false)
                     .build();
             httpPost.setConfig(requestConfig);
-        	StringEntity stringEntity = new StringEntity(json, charset);
-    		stringEntity.setContentType(APPLICATION_JSON);
-    		stringEntity.setContentEncoding(charset);
-    		httpPost.setEntity(stringEntity);
-    		
+            StringEntity stringEntity = new StringEntity(json, charset);
+            stringEntity.setContentType(APPLICATION_JSON);
+            stringEntity.setContentEncoding(charset);
+            httpPost.setEntity(stringEntity);
+
             CloseableHttpResponse response = httpClient.execute(httpPost);
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
@@ -546,27 +502,19 @@ public class HttpClientUtil {
             String result = null;
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
-                end = System.currentTimeMillis();//new Date().getTime();
-                log.info("HttpClientUtil,request url:" + url + "|json:" + json + "|time:" + (end - start) + "ms");
-                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
-    	}catch(ConnectTimeoutException e){
-    		end = System.currentTimeMillis();//new Date().getTime();
-    		log.error("HttpClientUtil,error timeout request url:" + url + "|json:" + json+ "|time:" + (end - start) + "ms");
-    		log.error(e.getMessage(), e);
-    	}catch(SocketTimeoutException e){
-    		end = System.currentTimeMillis();//new Date().getTime();
-   		 	log.error("HttpClientUtil,error timeout request url:" + url + "|json:" + json+ "|time:" + (end - start) + "ms");
-   		 	log.error(e.getMessage(), e);
-    	}catch(Exception e){
-    		 log.error("HttpClientUtil,error request url:" + url + "|json:" + json);
-             log.error(e.getMessage(), e);
-    	}
-    	return null;
-    }   
+        }catch(ConnectTimeoutException e){
+            e.printStackTrace();
+        }catch(SocketTimeoutException e){
+            log.error(e.getMessage(), e);
+        }catch(Exception e){
+            log.error(e.getMessage(), e);
+        }
+        return null;
+    }
     /**
      * http post json 字符串请求
      * @param url
@@ -575,51 +523,45 @@ public class HttpClientUtil {
      * @throws Exception
      */
     public static String doPostWithJSONFORM(String url, String json) throws Exception {
-    	return doPostWithJSONFORM(url, json, CHARSET);
+        return doPostWithJSONFORM(url, json, CHARSET);
     }
-    
+
     public static String doPostWithJSONFORM(String url, String json, String charset) throws Exception {
-        
-    	if (StringUtils.isBlank(url)) {
+
+        if (StringUtils.isBlank(url)) {
             return null;
         }
-    	
+
         log.debug("HttpClientUtil,request url:" + url + " and params:" + json);
-    	try{
-    		long start = System.currentTimeMillis();//new Date().getTime();
-    		HttpPost httpPost = new HttpPost(url);
-    		StringEntity stringEntity = new StringEntity(json, charset);
-    		stringEntity.setContentType(APPLICATION_JSON_FORM);
-    		stringEntity.setContentEncoding(charset);
-    		httpPost.setEntity(stringEntity);
+        try{
+            HttpPost httpPost = new HttpPost(url);
+            StringEntity stringEntity = new StringEntity(json, charset);
+            stringEntity.setContentType(APPLICATION_JSON_FORM);
+            stringEntity.setContentEncoding(charset);
+            httpPost.setEntity(stringEntity);
             CloseableHttpResponse response = httpClient.execute(httpPost);
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
                 httpPost.abort();
-                log.error("HttpClient,error status code:" + statusCode + "|request url:" + url + "|json:" + json);
                 throw new RuntimeException("HttpClient,error status code :" + statusCode);
             }
             HttpEntity entity = response.getEntity();
             String result = null;
             if (entity != null) {
                 result = EntityUtils.toString(entity, CHARSET);
-                long end = System.currentTimeMillis();//new Date().getTime();
-                log.info("HttpClientUtil,request url:" + url + "|json:" + json + "|time:" + (end - start) + "ms");
-                log.debug("HttpClientUtil,response result :" + result);
             }
             EntityUtils.consume(entity);
             response.close();
             return result;
-    	}catch(Exception e){
-    		 log.error("HttpClientUtil,error request url:" + url + "|json:" + json);
-             log.error(e.getMessage(), e);
-    	}
-    	return null;
+        }catch(Exception e){
+            log.error(e.getMessage(), e);
+        }
+        return null;
     }
 
     /**
      * 下载文件
-     * 
+     *
      * @param url
      *            http://www.xxx.com/img/111.jpg
      * @param destFileName
@@ -652,3 +594,4 @@ public class HttpClientUtil {
         httpClient.close();
     }
 }
+

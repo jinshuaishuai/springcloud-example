@@ -10,6 +10,7 @@ import java.util.Random;
 /**
  * @author shuai.jin
  * @date 2020/6/2 11:33
+ * @description     二次验证动态码生成工具类
  */
 public class TimeBasedOneTimePasswordUtil {
     public static final int DEFAULT_TIME_STEP_SECONDS = 60;

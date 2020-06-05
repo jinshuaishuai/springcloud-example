@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 import com.jin.common.config.OssPropertiesConfig;
-import com.jin.common.util.HttpClientUtil;
 
 public class OssPropertiesConfigTest {
 	

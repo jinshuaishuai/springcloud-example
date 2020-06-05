@@ -8,6 +8,13 @@ spring:
 #    admin:
 #      client:
 #        url:  http://localhost:8783
+
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+    resources:
+      static-locations: classpath:/static/**    #对static文件夹下的所有文件放行
   datasource:
     #默认的采用Tomcat数据源
     #driver-class-name:  com.mysql.jdbc.Driver
@@ -50,10 +57,10 @@ spring:
         min-idle: 0
         max-wait: 20
    
-eureka:
-  client:
-    serviceUrl:
-      defaultZone:  http://localhost:8761/eureka/   #注册到服务注册中心
+#eureka:
+ # client:
+  #  serviceUrl:
+  #    defaultZone:  http://localhost:8761/eureka/   #注册到服务注册中心
 management:
   endpoints:
     web:

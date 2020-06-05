@@ -1,8 +1,8 @@
 package com.jin.test;
 
+import com.jin.common.util.HttpClientUtil;
 import org.junit.Test;
 
-import com.jin.common.util.HttpClientUtil;
 import com.jin.entity.pojo.ImageInfo;
 
 import net.sf.json.JSONObject;

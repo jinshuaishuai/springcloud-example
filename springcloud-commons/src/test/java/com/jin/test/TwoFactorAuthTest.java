@@ -18,7 +18,7 @@ public class TwoFactorAuthTest {
         System.out.println("secret = " + base32Secret);
 
         // this is the name of the key which can be displayed by the authenticator program
-        String keyId = "user@j256.com";
+        String keyId = "jin2111843364@163.com";
         // generate the QR code
         System.out.println("Image url = " + TimeBasedOneTimePasswordUtil.qrImageUrl(keyId, base32Secret));
         // we can display this image to the user to let them load it into their auth program
